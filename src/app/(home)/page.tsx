@@ -1,14 +1,25 @@
+import Answer from "../ui/chat/answer";
 import ChatInput from "../ui/chat/chat-input";
-import TopBar from "../ui/topbar";
+import Question from "../ui/chat/question";
 
 export default function Home() {
   return (
-    <>
-      <TopBar />
-      <div className="bg-white w-full max-w-2xl mx-auto h-80">
-        hello
-        <ChatInput />
+    <div className="w-full h-82 mx-auto flex flex-col">
+      <div className="scroll-auto flex-1">
+        <Answer />
+        <Question />
+        <Answer />
+        <Question />
+        <Answer />
+        <Question />
+        <Answer />
+        <Question />
+        <Answer />
+        <Question />
+        <Answer />
+        <Question />
       </div>
-    </>
+      <ChatInput />
+    </div>
   );
 }

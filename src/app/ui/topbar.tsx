@@ -1,22 +1,16 @@
 import Image from "next/image";
+import Logo from "./logo.png";
 
 export default function TopBar() {
   return (
-    <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a
-          href="https://flowbite.com/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
-        >
-          <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="h-8"
-            alt="Flowbite Logo"
-          />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            Monni Chatbot
+    <nav className="bg-white dark:bg-gray-900 h-18 fixed w-full z-20 border-b border-gray-200 dark:border-gray-600">
+      <div className="max-w-screen-xl h-full flex flex-wrap items-center justify-between m-auto p-4">
+        <div className="flex items-center space-x-3 rtl:space-x-reverse">
+          <Image src={Logo} className="h-8" width={40} alt="Monni Logo" />
+          <span className="self-center text-2xl font-semibold whitespace-nowrap text-primary-600 dark:text-white">
+            MonniChatbot
           </span>
-        </a>
+        </div>
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <button
             type="button"
