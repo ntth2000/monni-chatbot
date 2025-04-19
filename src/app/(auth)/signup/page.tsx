@@ -14,6 +14,7 @@ export default function Page() {
     <>
       <div className="flex flex-row justify-center items-center space-x-2 mb-4">
         <Logo width="48px" height="48px" />
+        <h2 className="text-3xl md:text-4xl font-bold">Monni</h2>
       </div>
 
       <Card title="Create an account">

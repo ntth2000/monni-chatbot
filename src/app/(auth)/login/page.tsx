@@ -13,7 +13,6 @@ export default function Page() {
     <>
       <div className="flex flex-row justify-center items-center space-x-2 mb-4">
         <Logo width="48px" height="48px" />
-        {/* <h2 className="text-2xl md:text-3xl font-medium">Monni</h2> */}
       </div>
       <Card title="Login to use Monni">
         <form className="space-y-4 md:space-y-6" action="#">
