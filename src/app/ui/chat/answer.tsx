@@ -1,10 +1,11 @@
-export default function Answer() {
+export default function Answer({ text }: { text: string }) {
   return (
-    <div className="bg-msg-surface text-gray-800 max-w-3/5 rounded-2xl border-msg-border rounded-tr-none py-4 px-5 ml-auto">
-      <p>
-        Lấy ví dụ và mô tả về một phần mềm mà bạn sử dụng thường xuyên. hãy mô
-        tả phần mềm visual
-      </p>
+    <div className="py-2 md:py-3">
+      <div className="py-4">{text}</div>
     </div>
   );
+}
+
+export function LoadingAnswer(){
+  return <>doing</>
 }

@@ -1,15 +1,30 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import "tailwindcss";
-@tailwind utilities;
+
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
   --primary-text: #160211;
-  --secondary-text: #56637e;
-  --primary: #e6e0ff;
-  --msg-surface: rgb(256, 256, 256, 0.5);
-  --msg-border: #fff;
+  --secondary-text: #58637b;
+  --primary: #4d9aff;
+  --secondary: #328bff;
+  --msg-surface: rgba(255, 255, 255, 0.6);
+  --main-surface: radial-gradient(
+      ellipse 700px 700px at 40% 75%,
+      rgb(255, 134, 225, 0.5) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 550px 550px at 65% 75%,
+      rgb(137, 188, 255, 0.3) 0%,
+      transparent 100%
+    );
+  --card-surface: rgba(255, 255, 255, 0.4);
 }
 
 @theme inline {
@@ -20,20 +35,32 @@
   --color-text-primary: var(--primary-text);
   --color-text-secondary: var(--secondary-text);
   --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-card-surface: var(--card-surface);
   --color-msg-surface: var(--msg-surface);
   --color-msg-border: var(--msg-border);
-  --color-main-surface-bg: radial-gradient(#fce6ff, #e6e0ff, #d9f2ff, #fff);
-  --font-poppins: "Poppins", sans-serif;
+  --color-main-surface: var(--main-surface);
+  --font-main: "Manrope", "Poppins", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+}
+body {
+  color: var(--color-text-primary);
+  font-family: var(--font-main);
 }
 
-body {
-  background-color: var(--color-main-surface-bg);
-  font-family: "Poppins", sans-serif;
+input, textarea {
+  @apply focus:ring-0 focus:border-none focus:outline-none;
+}
+
+.bg-gradient {
+  background-color: #fff;
+  background-image: var(--color-main-surface);
+  filter: blur(150px);
+  z-index: -1;
+}
+
+.w-chat {
+  @apply w-full px-4 md:w-4/5 md:px-0 lg:w-1/2;
 }

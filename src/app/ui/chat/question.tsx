@@ -1,10 +1,9 @@
-export default function Question() {
-    return (
-      <div className="bg-gray-100 text-gray-800 w-3/5 rounded-2xl rounded-tl-none py-4 px-5 mr-auto my-5">
-        <p>
-          Lấy ví dụ và mô tả về một phần mềm mà bạn sử dụng thường xuyên. hãy mô
-          tả phần mềm visual
-        </p>
+export default function Question({ text }: { text: string }) {
+  return (
+    <div className="py-2 md:py-3 w-full">
+      <div className="ml-auto py-2.5 md:py-4 px-4 md:px-5 rounded-3xl max-w-7/10 bg-msg-surface">
+        {text}
       </div>
-    );
-  }
+    </div>
+  );
+}

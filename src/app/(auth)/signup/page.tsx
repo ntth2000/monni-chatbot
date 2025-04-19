@@ -1,6 +1,9 @@
-import Button from "@/app/ui/card/button";
+"use client";
+
+import Button from "@/app/ui/button";
 import Card from "@/app/ui/card/card";
 import Input from "@/app/ui/card/input";
+import Logo from "@/app/ui/icons/logo";
 import Link from "next/link";
 
 export default function Page() {
@@ -8,31 +11,37 @@ export default function Page() {
     console.log("heello");
   }
   return (
-    <Card title="Signup">
-      <Input
-        label="Username"
-        id="username"
-        placeholder="Username"
-        type="text"
-        required={true}
-      />
-      <Input
-        label="Password"
-        id="password"
-        placeholder="Password"
-        type="text"
-        required={true}
-      />
-      <Button onClick={handleSignup}>Signup</Button>
-      <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-        Already have an account?{" "}
-        <Link
-          href="/login"
-          className="font-bold text-primary-600 hover:underline dark:text-primary-500"
-        >
-          Login here
-        </Link>
-      </p>
-    </Card>
+    <>
+      <div className="flex flex-row justify-center items-center space-x-2 mb-4">
+        <Logo width="48px" height="48px" />
+      </div>
+
+      <Card title="Create an account">
+        <Input
+          label="Username"
+          id="username"
+          placeholder="Username"
+          type="text"
+          required={true}
+        />
+        <Input
+          label="Password"
+          id="password"
+          placeholder="Password"
+          type="text"
+          required={true}
+        />
+        <Button onClick={handleSignup}>Sign up</Button>
+        <p className="text-center font-light secondary-text">
+          Already have an account?{" "}
+          <Link
+            href="/login"
+            className="font-bold text-primary hover:underline"
+          >
+            Login
+          </Link>
+        </p>
+      </Card>
+    </>
   );
 }

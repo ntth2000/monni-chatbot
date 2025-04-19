@@ -2,11 +2,11 @@ import TopBar from "../ui/topbar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full h-full">
-      <TopBar />
-      <div className="w-full p-4 lg:w-4/7 mx-auto flex flex-col items-center justify-center">
-        {children}
+    <div className="relative w-full h-full">
+      <div className="h-18 top-0 absolute w-full">
+        <TopBar />
       </div>
+      <div className="absolute top-18 bottom-0 w-full">{children}</div>
     </div>
   );
 }

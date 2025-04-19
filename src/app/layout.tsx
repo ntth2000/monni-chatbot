@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import TopBar from "./ui/topbar";
 
 export const metadata: Metadata = {
   title: "Monni chatbot",
@@ -14,9 +15,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="h-screen w-full flex flex-col items-center justify-center bg-main-surface-bg">
+        <div className="bg-gradient fixed top-0 bottom-0 left-0 right-0"></div>
+        <main className="h-screen w-screen overflow-hidden flex flex-col items-center justify-center text-sm md:text-base">
           {children}
-        </div>
+        </main>
       </body>
     </html>
   );
