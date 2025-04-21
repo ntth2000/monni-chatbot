@@ -1,11 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-@import "tailwindcss";
-
+/* @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); */
+@import 'tailwindcss';
+ 
 @layer theme, base, components, utilities;
-@import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/preflight.css" layer(base);
-@import "tailwindcss/utilities.css" layer(utilities);
-
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/preflight.css' layer(base);
+@import 'tailwindcss/utilities.css' layer(utilities);
+ 
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -20,13 +20,13 @@
       transparent 100%
     ),
     radial-gradient(
-      ellipse 550px 550px at 65% 75%,
-      rgb(137, 188, 255, 0.3) 0%,
+     ellipse 550px 550px at 65% 75%,
+    rgb(137, 188, 255, 0.3) 0%,
       transparent 100%
     );
   --card-surface: rgba(255, 255, 255, 0.4);
 }
-
+ 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -40,27 +40,45 @@
   --color-msg-surface: var(--msg-surface);
   --color-msg-border: var(--msg-border);
   --color-main-surface: var(--main-surface);
-  --font-main: "Manrope", "Poppins", sans-serif;
+  --font-main: 'Manrope', 'Poppins', sans-serif;
 }
-
+ 
 @media (prefers-color-scheme: dark) {
 }
 body {
   color: var(--color-text-primary);
   font-family: var(--font-main);
 }
-
-input, textarea {
+ 
+input,
+textarea {
   @apply focus:ring-0 focus:border-none focus:outline-none;
 }
-
+ 
 .bg-gradient {
   background-color: #fff;
   background-image: var(--color-main-surface);
   filter: blur(150px);
   z-index: -1;
 }
-
+ 
 .w-chat {
   @apply w-full px-4 md:w-4/5 md:px-0 lg:w-1/2;
+}
+ 
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+ 
+.shimmer::before {
+  content: '';
+  @apply absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite];
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.9),
+    transparent
+  );
 }

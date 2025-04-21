@@ -1,12 +1,13 @@
 "use client";
-
+ 
 import { useState } from "react";
 import Answer from "../ui/chat/answer";
 import ChatInput from "../ui/chat/chat-input";
 import Question from "../ui/chat/question";
 import { chatData } from "../lib/placeholder-data";
 import NoChatHistory from "../ui/no-chat-history";
-
+import { ChatSkeleton } from "../ui/skeletons";
+ 
 export default function Page() {
   const [chatHistory, setChatHistory] = useState(chatData);
   return (
@@ -22,6 +23,7 @@ export default function Page() {
                 </>
               );
             })}
+            {/* <ChatSkeleton /> */}
           </div>
         ) : (
           <div className="w-chat mx-auto my-auto h-full flex flex-row justify-center items-center">
@@ -29,7 +31,7 @@ export default function Page() {
           </div>
         )}
       </div>
-
+ 
       <div className="w-chat mx-auto pb-6 md:pb-8 pt-2">
         <ChatInput />
       </div>

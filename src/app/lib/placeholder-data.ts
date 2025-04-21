@@ -127,3 +127,119 @@ export const chatData = [
       "Yes, you’ll need an account so I can store your data and help you track it over time.",
   },
 ];
+
+export const users = [
+  {
+    id: "410544b2-4001-4271-9855-fec4b6a6442a",
+    name: "User",
+    email: "user@nextmail.com",
+    password: "123456",
+  },
+];
+
+export const dummySpendings = [
+  {
+    id: "de6be3bb-b3dc-43e4-bf13-c4ad77c595fd",
+    user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+    amount: 120000,
+    category: "Food & Drink",
+    description: "Lunch at local restaurant",
+    date: "2025-04-01",
+  },
+  {
+    id: "87405767-0f86-4e49-a42f-f1cf27c3cc20",
+    user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+    amount: 55000,
+    category: "Entertainment",
+    description: "Movie ticket",
+    date: "2025-04-02",
+  },
+  {
+    id: "0cb7747f-eaa0-42ef-97a1-3627b63fbe18",
+    user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+    amount: 25000,
+    category: "Transportation",
+    description: "Bus fare",
+    date: "2025-04-02",
+  },
+  {
+    id: "60aebebb-b7c3-4a76-bb3e-1268d689c42e",
+    user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+    amount: 300000,
+    category: "Shopping",
+    description: "Bought a jacket",
+    date: "2025-04-03",
+  },
+  {
+    id: "fc0e22bb-21f6-4148-bda4-3c49ad4b292a",
+    user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+    amount: 98000,
+    category: "Food & Drink",
+    description: "Dinner at a restaurant",
+    date: "2025-04-04",
+  },
+  {
+    id: "236c3a0a-c258-4ee9-a1e3-3f87c87b4e4e",
+    user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+    amount: 15000,
+    category: "Café",
+    description: "Morning coffee",
+    date: "2025-04-04",
+  },
+  {
+    id: "01cb1460-2ea7-4976-8935-1b1cfe2bc123",
+    user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+    amount: 180000,
+    category: "Health",
+    description: "General health checkup",
+    date: "2025-04-05",
+  },
+  {
+    id: "e0ebc2dc-b9e6-464e-8993-9e30d0b9d1f2",
+    user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+    amount: 60000,
+    category: "Transportation",
+    description: "Grab ride home",
+    date: "2025-04-06",
+  },
+  {
+    id: "a2bbda10-7289-493b-83b2-e2fe45b11b15",
+    user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+    amount: 100000,
+    category: "Education",
+    description: "Bought a skill book",
+    date: "2025-04-07",
+  },
+  {
+    id: "b34946e4-1df7-4dc5-9e4d-1b6769303bb6",
+    user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+    amount: 20000,
+    category: "Food & Drink",
+    description: "Afternoon snack",
+    date: "2025-04-08",
+  },
+];
+
+export const dummyChatHistory = [
+  {
+    id: "e22e4f81-0df9-4e14-a899-9d8a3ff6f123",
+    userId: "410544b2-4001-4271-9855-fec4b6a6442a",
+    question: "How much did I spend last week?",
+    answer: "You spent 1,200,000 VND last week.",
+    timestamp: new Date("2025-04-20T10:00:00Z"),
+  },
+  {
+    id: "91d1eabb-4e79-4f17-9c75-748fa3e54c21",
+    userId: "410544b2-4001-4271-9855-fec4b6a6442a",
+    question: "What is my biggest expense this month?",
+    answer: "Your biggest expense this month is rent: 5,000,000 VND.",
+    timestamp: new Date("2025-04-19T15:30:00Z"),
+  },
+  {
+    id: "3dca3c42-8c12-4a7f-9d79-7e3dd22e4b64",
+    userId: "410544b2-4001-4271-9855-fec4b6a6442a",
+    question: "Show me a summary of April expenses.",
+    answer: "In April, you spent a total of 7,800,000 VND.",
+    timestamp: new Date("2025-04-18T09:15:00Z"),
+  },
+];
