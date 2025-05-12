@@ -1,50 +1,57 @@
 import { EyeIcon, EyeSlashIcon } from "../icons/eye";
+
 interface Props extends React.HTMLProps<HTMLInputElement> {
-  ...
-  }
-export default function Input({
-  label,
-  required,
-  placeholder,
-  type,
-  id,
-  error,
-  handleShowPassword
-}: {
   label: string;
   type: string;
   id: string;
-  placeholder: string;
-  required: boolean;
+  name: string;
   error?: string;
-}) {
+  hint?: string;
+  handleShowPassword?: (e: React.MouseEvent) => void;
+  value?: string;
+}
+
+export default function Input({
+  label,
+  name,
+  type,
+  id,
+  error,
+  hint,
+  handleShowPassword,
+}: Props) {
+  console.log("error", error);
   return (
     <div className="">
       <label className="block mb-2 font-bold" htmlFor={id}>
         {label}
       </label>
       <div
-        className={`relative rounded-lg bg-gray-100 ${
+        className={`relative rounded-lg bg-gray-100 border-1 ${
           id === "password" ? "pr-10" : ""
+        } ${
+          !!error
+            ? "border-red-400 focus:border-red-400"
+            : "border-gray-100 focus:border-gray-100"
         }`}
       >
         <input
           id={id}
           type={type}
-          required={required}
-          placeholder={placeholder}
-          className={`bg-gray-100 rounded-lg block w-full p-2.5 border ${
-            error
-              ? "border-red-500 focus:border-red-500"
-              : "border-gray-100 focus:border-gray-100"
-          }`}
+          name={name}
+          className={`bg-gray-100 rounded-lg block w-full p-2.5 focus:outline-none`}
         />
-        <div className="absolute cursor-pointer right-2 top-1/2  -translate-y-1/2">
-          {id === "password" && type === "password" && <EyeIcon />}
-          {id === "password" && type === "text" && <EyeSlashIcon />}
-        </div>
+        {id === "password" && (
+          <div
+            className="absolute cursor-pointer right-2 top-1/2  -translate-y-1/2"
+            onClick={handleShowPassword}
+          >
+            {id === "password" && type === "password" && <EyeIcon />}
+            {id === "password" && type === "text" && <EyeSlashIcon />}
+          </div>
+        )}
       </div>
-      <p className="text-xs text-red-500 min-h-5 pt-2">{error}</p>
+      {hint && <p className={`text-xs ${error ? "text-red-500" : "text-gray-500"} pt-2`}>{hint}</p>}
     </div>
   );
 }
