@@ -20,8 +20,8 @@
       transparent 100%
     ),
     radial-gradient(
-     ellipse 550px 550px at 65% 75%,
-    rgb(137, 188, 255, 0.3) 0%,
+      ellipse 550px 550px at 65% 75%,
+      rgb(137, 188, 255, 0.3) 0%,
       transparent 100%
     );
   --card-surface: rgba(255, 255, 255, 0.4);
@@ -81,4 +81,31 @@ textarea {
     rgba(255, 255, 255, 0.9),
     transparent
   );
+}
+
+/* styles.css hoặc global.css */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px; /* Cho horizontal scrollbar nếu có */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(215, 217, 219); /* Tailwind gray-300 */
+  border-radius: 8px;
+  border: 4px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a5a9b1; /* gray-400 khi hover */
+}
+
+/* Firefox support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
 }

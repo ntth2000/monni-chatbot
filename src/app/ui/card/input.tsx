@@ -51,7 +51,14 @@ export default function Input({
           </div>
         )}
       </div>
-      {hint && <p className={`text-xs ${error ? "text-red-500" : "text-gray-500"} pt-2`}>{hint}</p>}
+      {hint && (
+        <p
+          className={`text-xs ${error ? "text-red-500" : "text-gray-500"} pt-2`}
+        >
+          {hint}
+        </p>
+      )}
+      {!hint && error && <p className="text-xs text-red-500 pt-2">{error}</p>}
     </div>
   );
 }

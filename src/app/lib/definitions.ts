@@ -3,3 +3,10 @@ export type User = {
   name: string;
   password: string;
 };
+
+export type Conversation = {
+  id: string;
+  answer: string;
+  question: string;
+  createdAt: string;
+};

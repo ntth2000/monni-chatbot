@@ -1,13 +1,13 @@
 "use client";
 
-import { signupAction } from "@/app/lib/actions";
+import { signupAction } from "@/app/lib/api/auth";
 import { SignupFormSchema } from "@/app/lib/validations";
-import Button from "@/app/ui/button";
 import Card from "@/app/ui/card/card";
 import Input from "@/app/ui/card/input";
 import Logo from "@/app/ui/icons/logo";
 import Link from "next/link";
-import { useActionState, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Page() {
   const [messages, setMessages] = useState({
@@ -15,6 +15,7 @@ export default function Page() {
     success: "",
   });
   const [passwordType, setPasswordType] = useState("password");
+  const router = useRouter();
 
   const handleSignup = async (
     e: React.FormEvent<HTMLFormElement>
@@ -38,32 +39,22 @@ export default function Page() {
         },
         success: "",
       });
-
-      return;
-    }
-
-    try {
-      await signupAction({ username, password });
-    } catch (e: any) {
-      if (e.status === 409) {
+    } else {
+      try {
+        const msg = await signupAction({ username, password });
         setMessages({
-          success: "",
-          errors: {
-            username: e.message,
-            password: "",
-            common: "Register unsuccessfully.",
-          },
-        });
-      } else if (e.status === 400) {
-        setMessages({
-          success: "",
+          success: msg,
           errors: {
             username: "",
             password: "",
-            common: e.message,
+            common: "",
           },
         });
-      } else {
+
+        setTimeout(() => {
+          router.push("/login");
+        }, 500);
+      } catch (e: any) {
         setMessages({
           success: "",
           errors: {
@@ -88,7 +79,11 @@ export default function Page() {
       </div>
 
       <Card title="Create an account">
-        <form className="space-y-2 md:space-y-4" onSubmit={handleSignup}>
+        <form
+          className="space-y-2 md:space-y-4"
+          onSubmit={handleSignup}
+          method="POST"
+        >
           <Input
             label="Username"
             id="username"
@@ -119,7 +114,12 @@ export default function Page() {
               {messages?.success}
             </p>
           )}
-          <Button>Sign up</Button>
+          <button
+            type="submit"
+            className={`w-full text-white bg-primary hover:bg-secondary hover:cursor-pointer font-medium rounded-full px-3 md:px-5 py-2.5 text-center`}
+          >
+            Signup
+          </button>
           <p className="text-center font-light secondary-text">
             Already have an account?{" "}
             <Link
