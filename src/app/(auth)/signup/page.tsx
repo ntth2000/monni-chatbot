@@ -1,13 +1,14 @@
 "use client";
 
-import { signupAction } from "@/app/lib/api/auth";
+import { refreshTokenAction, signupAction } from "@/app/lib/api/auth";
 import { SignupFormSchema } from "@/app/lib/validations";
 import Card from "@/app/ui/card/card";
 import Input from "@/app/ui/card/input";
 import Logo from "@/app/ui/icons/logo";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { showToast } from "@/app/ui/toast-message";
 
 export default function Page() {
   const [messages, setMessages] = useState({
@@ -15,12 +16,14 @@ export default function Page() {
     success: "",
   });
   const [passwordType, setPasswordType] = useState("password");
+  const [isDisabled, setIsDisabled] = useState(false);
   const router = useRouter();
 
   const handleSignup = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
+    setIsDisabled(true);
 
     const formData = new FormData(e.currentTarget);
     const username = formData.get("username")?.toString().trim() || "";
@@ -39,11 +42,12 @@ export default function Page() {
         },
         success: "",
       });
+      setIsDisabled(false);
     } else {
       try {
-        const msg = await signupAction({ username, password });
+        await signupAction({ username, password });
         setMessages({
-          success: msg,
+          success: "",
           errors: {
             username: "",
             password: "",
@@ -51,9 +55,13 @@ export default function Page() {
           },
         });
 
+        const { show, close } = showToast("Đăng kí thành công");
+        show();
+
         setTimeout(() => {
+          close();
           router.push("/login");
-        }, 500);
+        }, 1000);
       } catch (e: any) {
         setMessages({
           success: "",
@@ -63,6 +71,7 @@ export default function Page() {
             common: e.message || "Something went wrong. Please try again.",
           },
         });
+        setIsDisabled(false);
       }
     }
   };
@@ -70,6 +79,18 @@ export default function Page() {
   const handleShowPassword = async () => {
     setPasswordType((prev) => (prev === "password" ? "text" : "password"));
   };
+
+  useEffect(() => {
+    const tryRefresh = async () => {
+      const res = await refreshTokenAction();
+
+      if (res.status === 200) {
+        router.push("/");
+      }
+    };
+
+    tryRefresh();
+  }, []);
 
   return (
     <>
@@ -116,6 +137,7 @@ export default function Page() {
           )}
           <button
             type="submit"
+            disabled={isDisabled}
             className={`w-full text-white bg-primary hover:bg-secondary hover:cursor-pointer font-medium rounded-full px-3 md:px-5 py-2.5 text-center`}
           >
             Signup

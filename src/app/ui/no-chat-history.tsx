@@ -8,11 +8,11 @@ export default function NoChatHistory() {
       </div>
 
       <p className="font-medium text-base md:text-lg mb-2">
-        I'm Monni – your personal finance assistant
+        Chào bạn 👋 <span className="font-bold">Tớ là Monni - trợ lý tài chính cá nhân của bạn</span>
       </p>
       <p>
-        Start by typing something like:{" "}
-        <span className="italic"> I spent 50k on breakfast today.</span>
+        Bạn có thể bắt đầu bằng cách nhắn gì đó như:{" "}
+        <span className="italic">"Hôm nay tớ tiêu 50k ăn sáng"</span> nha.
       </p>
     </div>
   );

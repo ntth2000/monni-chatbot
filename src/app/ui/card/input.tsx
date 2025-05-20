@@ -20,7 +20,7 @@ export default function Input({
   hint,
   handleShowPassword,
 }: Props) {
-  console.log("error", error);
+  console.trace("error", error);
   return (
     <div className="">
       <label className="block mb-2 font-bold" htmlFor={id}>

@@ -29,10 +29,15 @@ export default function ChatInput({
       </div>
       <div className="">
         <button
+          aria-disabled={isDisabled}
           disabled={isDisabled}
           type="button"
           onClick={onSendMessage}
-          className={`w-full text-white bg-primary hover:bg-secondary hover:cursor-pointer font-medium rounded-full px-2.5 py-2.5 text-center`}
+          className={`w-full text-white font-medium rounded-full px-2.5 py-2.5 text-center ${
+            isDisabled
+              ? "bg-gray-400 cursor-default"
+              : "bg-primary hover:bg-secondary cursor-pointer"
+          }`}
         >
           <svg
             className="w-5 h-5 rotate-90 rtl:-rotate-90"

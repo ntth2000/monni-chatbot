@@ -1,13 +1,15 @@
 "use client";
 
-import { loginAction } from "@/app/lib/api/auth";
+import { showToast } from "@/app/ui/toast-message";
+import { loginAction, refreshTokenAction } from "@/app/lib/api/auth";
 import { LoginFormSchema } from "@/app/lib/validations";
 import Card from "@/app/ui/card/card";
 import Input from "@/app/ui/card/input";
 import Logo from "@/app/ui/icons/logo";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { CustomError } from "@/app/lib/utils/errors";
 
 export default function Page() {
   const [messages, setMessages] = useState({
@@ -20,7 +22,6 @@ export default function Page() {
   const handleLogin = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
-    console.log("handleLogin")
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -40,12 +41,11 @@ export default function Page() {
         },
         success: "",
       });
-      console.log("messages", messages);
     } else {
       try {
-        const msg = await loginAction({ username, password });
+        await loginAction({ username, password });
         setMessages({
-          success: msg,
+          success: "",
           errors: {
             username: "",
             password: "",
@@ -53,19 +53,33 @@ export default function Page() {
           },
         });
 
+        const { show, close } = showToast("Đăng nhập thành công");
+        show();
+
         setTimeout(() => {
+          close();
           router.push("/");
         }, 500);
-      } catch (e: any) {
-        console.log("e", e);
-        setMessages({
-          success: "",
-          errors: {
-            username: "",
-            password: "",
-            common: e.message || "Something went wrong. Please try again.",
-          },
-        });
+      } catch (e: CustomError | any) {
+        if (e.status === 401) {
+          setMessages({
+            success: "",
+            errors: {
+              username: "",
+              password: "",
+              common: "Sai tên đăng nhập hoặc mật khẩu.",
+            },
+          });
+        } else {
+          setMessages({
+            success: "",
+            errors: {
+              username: "",
+              password: "",
+              common: "Đã có lỗi xảy ra, vui lòng thử lại.",
+            },
+          });
+        }
       }
     }
   };
@@ -74,6 +88,18 @@ export default function Page() {
     setPasswordType((prev) => (prev === "password" ? "text" : "password"));
   };
 
+  useEffect(() => {
+    const tryRefresh = async () => {
+      const res = await refreshTokenAction();
+
+      if (res.status === 200) {
+        router.push("/");
+      }
+    };
+
+    tryRefresh();
+  }, []);
+
   return (
     <>
       <div className="flex flex-row justify-center items-center space-x-2 mb-4">
@@ -81,10 +107,7 @@ export default function Page() {
         {/* <h2 className="text-2xl md:text-3xl font-medium">Monni</h2> */}
       </div>
       <Card title="Login to use Monni">
-        <form
-          className="space-y-2 md:space-y-4"
-          onSubmit={handleLogin}
-        >
+        <form className="space-y-2 md:space-y-4" onSubmit={handleLogin}>
           <Input
             id="username"
             label="Username"

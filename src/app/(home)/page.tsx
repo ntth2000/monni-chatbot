@@ -11,18 +11,17 @@ import {
   getAllConversationAction,
 } from "../lib/api/conversation";
 import { Conversation } from "../lib/definitions";
+import LoadingAnswer from "../ui/chat/loading-answer";
 
 export default function Page() {
   const [chatInput, setChatInput] = useState("");
   const [chatHistory, setChatHistory] = useState<Conversation[]>([]);
-  const [isDisabledBtn, setIsDisabledBtn] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const [isLoadingAnswer, setIsLoadingAnswer] = useState(false);
   const lastMessageRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    console.log("inside useEffect");
     const fetchInitialHistory = async () => {
-      console.log("fetchInitialHistory");
       try {
         setLoading(true);
         const data: Conversation[] = await getAllConversationAction();
@@ -41,35 +40,46 @@ export default function Page() {
   };
 
   const handleSubmitChat = async (): Promise<void> => {
-    console.log("chatInput", chatInput);
+    if (isLoadingAnswer) return;
+
+    setIsLoadingAnswer(true);
     try {
-      setIsDisabledBtn(true);
       const question = chatInput;
       const currentHistory = JSON.parse(JSON.stringify(chatHistory));
       setChatInput("");
-      if (lastMessageRef) {
-        lastMessageRef?.current?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
       const tempChat: Conversation = {
-        id: crypto.randomUUID(), // tạo ID tạm thời
+        id: crypto.randomUUID(),
         question,
-        answer: "Đang xử lý...",
+        answer: "",
         createdAt: new Date().toISOString(),
       };
       setChatInput("");
       setChatHistory((prev) => [...prev, tempChat]);
+
       const newChat: Conversation = await createNewQuestionAction(question);
       setChatHistory([...currentHistory, newChat]);
-      console.log("chatHistory", chatHistory);
-    } catch (error) {
-      console.log("error", error);
+    } catch (error: Error | any) {
+      let message: string = error.message;
+
+      if (error.status === 502) {
+        message = "Đã có lỗi xảy ra, vui lòng thử lại.";
+      }
+
+      setChatHistory((prev) => {
+        const updatedHistory = [...prev];
+        updatedHistory[updatedHistory.length - 1].answer = message;
+        return updatedHistory;
+      });
     }
-    console.log("chatHistory", chatHistory);
-    setIsDisabledBtn(false);
+    setIsLoadingAnswer(false);
   };
+
+  useEffect(() => {
+    if (lastMessageRef) {
+      lastMessageRef?.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [chatHistory]);
+
   return (
     <div className="h-full w-full flex flex-col">
       <div className="overflow-y-auto flex-auto pb-6">
@@ -81,12 +91,15 @@ export default function Page() {
                   key={chat.id}
                   ref={index === chatHistory.length - 1 ? lastMessageRef : null}
                 >
-                  <Question text={chat?.question} />
-                  <Answer text={chat?.answer} />
+                  <Question innerHTML={chat?.question} />
+                  {index === chatHistory.length - 1 && isLoadingAnswer ? (
+                    <LoadingAnswer />
+                  ) : (
+                    <Answer innerHTML={chat?.answer} />
+                  )}
                 </div>
               );
             })}
-            {}
           </div>
         )}
 
@@ -108,7 +121,7 @@ export default function Page() {
           chatInput={chatInput}
           onInputChange={handleInputChange}
           onSendMessage={handleSubmitChat}
-          isDisabled={isDisabledBtn}
+          isDisabled={isLoadingAnswer || chatInput.trim() === ""}
         />
       </div>
     </div>

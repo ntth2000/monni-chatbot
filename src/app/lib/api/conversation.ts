@@ -1,59 +1,46 @@
-"use server";
-
-import { cookies } from "next/headers";
+import { AxiosResponse } from "axios";
 import { Conversation } from "../definitions";
+import { CustomError } from "../utils/errors";
+import axiosClient from "./axios-client";
 
-export async function createNewQuestionAction(question: string): Promise<Conversation> {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("accessToken")?.value;
-  console.log("token", token);
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/conversation`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ question }),
-      credentials: "include",
+export async function createNewQuestionAction(
+  question: string
+): Promise<Conversation> {
+  try {
+    const res: AxiosResponse = await axiosClient.post(
+      "/conversation",
+      { question },
+      { withCredentials: true }
+    );
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      throw new CustomError(
+        res.data?.message || "Đã có lỗi xảy ra. Vui lòng thử lại sau.",
+        res.status
+      );
     }
-  );
-  console.log("res", res);
-  if (res.ok) {
-    const data = await res.json();
-    return data;
-  } else {
-    const error = await res.json().catch(() => ({})); // phòng trường hợp response không parse được JSON
-    const message = error.message || "Failed to fetch conversations";
-
-    throw new Error(message);
+  } catch (error: CustomError | any) {
+    throw error;
   }
 }
 
 export async function getAllConversationAction(): Promise<Conversation[]> {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("accessToken")?.value;
-  console.log("token", token);
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/conversation`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      credentials: "include",
+  try {
+    const res: AxiosResponse = await axiosClient.post(
+      "/conversation",
+      {},
+      { withCredentials: true }
+    );
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      throw new CustomError(
+        res.data?.message || "Đã có lỗi xảy ra. Vui lòng thử lại sau.",
+        res.status
+      );
     }
-  );
-  console.log("res", res);
-  if (res.ok) {
-    const data = await res.json();
-    return data;
-  } else {
-    const error = await res.json().catch(() => ({})); // phòng trường hợp response không parse được JSON
-    const message = error.message || "Failed to fetch conversations";
-
-    throw new Error(message);
+  } catch (error: CustomError | any) {
+    throw error;
   }
 }

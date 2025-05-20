@@ -19,6 +19,7 @@ export default function RootLayout({
         <main className="h-screen w-screen overflow-hidden flex flex-col items-center justify-center text-sm md:text-base">
           {children}
         </main>
+        <div id="toast-container" className="z-9999 fixed top-5 right-5"></div>
       </body>
     </html>
   );
